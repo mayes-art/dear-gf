@@ -24,3 +24,4 @@ Route::get('info', function () {
 Route::get('/', 'MainController@lineGet');
 
 Route::post('/', 'MainController@linePost');
+

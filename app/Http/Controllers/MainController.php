@@ -12,6 +12,7 @@ class MainController extends Controller
         try {
             $event = request()->all();
             Log::info($event);
+            return response('test', 200);
         } catch (\Exception $e) {
             report($e);
         }
@@ -22,6 +23,7 @@ class MainController extends Controller
         try {
             $event = $request->all();
             Log::info($event);
+            return response('test', 200);
         } catch (\Exception $e) {
             report($e);
         }
