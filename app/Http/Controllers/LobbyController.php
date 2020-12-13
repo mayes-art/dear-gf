@@ -12,6 +12,7 @@ class LobbyController extends Controller
         try {
             $event = request()->all();
             Log::info($event);
+            logger(json_encode($event, JSON_UNESCAPED_UNICODE));
             return response('test', 200);
         } catch (\Exception $e) {
             report($e);
@@ -23,6 +24,7 @@ class LobbyController extends Controller
         try {
             $event = $request->all();
             Log::info($event);
+            logger(json_encode($event, JSON_UNESCAPED_UNICODE));
             return response('test', 200);
         } catch (\Exception $e) {
             report($e);
