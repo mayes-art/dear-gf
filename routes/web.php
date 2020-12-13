@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LobbyController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,7 +22,6 @@ Route::get('info', function () {
     phpinfo();
 });
 
-Route::get('/', 'MainController@lineGet');
-
-Route::post('/', 'MainController@linePost');
+Route::get('/', [LobbyController::class, 'lineGet']);
+Route::post('/', [LobbyController::class, 'linePost']);
 
