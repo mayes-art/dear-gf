@@ -37,7 +37,9 @@ class LobbyController extends Controller
             Log::info(json_encode($event));
             logger(json_encode($event, JSON_UNESCAPED_UNICODE));
 
-            $this->bot->replyText($event['events'][0]['replyToken'], '你好阿!!');
+
+            $message = '歐囉上帝, 阿們';
+            $this->bot->replyText($event['events'][0]['replyToken'], $message);
 //            return response('test');
         } catch (\Exception $e) {
             report($e);
