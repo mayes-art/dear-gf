@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Services\LineBotService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 use LINE\LINEBot;
 use LINE\LINEBot\HTTPClient\CurlHTTPClient;
 use LINE\LINEBot\MessageBuilder\MultiMessageBuilder;
@@ -45,9 +46,15 @@ class LobbyController extends Controller
             logger(json_encode($event, JSON_UNESCAPED_UNICODE));
 
             $this->lineBotService->setBot($event);
+            $say = $this->lineBotService->getSay();
 
-            if ('阿公幫我丟' === $this->lineBotService->getSay()) {
-                $message = '阿公(1~100)隨機骰出來的數字為: ' . $this->lineBotService->randomChange();
+            if (Str::contains($say, '幫我丟')) {
+                $prefix = mb_substr($say, 0, 2);
+                if (!in_array($prefix, ['阿公', '爸爸', 'ㄚ公'])) {
+                    return;
+                }
+
+                $message = $prefix . '(1~100)隨機骰出來的數字為: ' . $this->lineBotService->randomChange();
                 $this->bot->replyText($this->lineBotService->getReplyToken(), $message);
             }
 
