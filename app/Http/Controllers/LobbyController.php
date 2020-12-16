@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\LineBotService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use LINE\LINEBot;
@@ -14,12 +15,14 @@ class LobbyController extends Controller
 
     protected $bot;
     protected $messageBuilder;
+    protected $lineBotService;
 
-    public function __construct()
+    public function __construct(LineBotService $lineBotService)
     {
         $httpClient = new CurlHTTPClient(env('LINE_BOT_CHANNEL_ACCESS_TOKEN'));
         $this->bot = new LINEBot($httpClient, ['channelSecret' => env('LINE_BOT_CHANNEL_SECRET')]);
         $this->messageBuilder = new MultiMessageBuilder();
+        $this->lineBotService = $lineBotService;
     }
 
     public function lineGet()
@@ -41,9 +44,13 @@ class LobbyController extends Controller
             Log::info(json_encode($event));
             logger(json_encode($event, JSON_UNESCAPED_UNICODE));
 
-            $text = new TextMessageBuilder('嘔咾上帝, 阿們');
+            $this->lineBotService->setBot($event);
+
             $message = '嘔咾上帝, 阿們';
-            $this->bot->replyText($event['events'][0]['replyToken'], $message);
+
+            if ('text' == $this->lineBotService->getReqType()) {
+                $this->bot->replyText($event['events'][0]['replyToken'], $message);
+            }
 //            return response('test');
         } catch (\Exception $e) {
             report($e);
