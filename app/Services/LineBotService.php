@@ -13,6 +13,10 @@ class LineBotService
 {
     protected $bot;
 
+    protected $replyToken;
+
+    protected $type;
+
     protected $multiMessageBuilder;
 
     public function __construct(MultiMessageBuilder $multiMessageBuilder)
