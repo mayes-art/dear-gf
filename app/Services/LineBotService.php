@@ -1,9 +1,12 @@
 <?php
-
-
+/**
+ * LINE Bot 服務層
+ * date: 2020-12-16
+ */
 namespace App\Services;
 
 
+use App\Contants\LineUserMap;
 use Illuminate\Support\Facades\Log;
 use LINE\LINEBot;
 use LINE\LINEBot\HTTPClient\CurlHTTPClient;
@@ -17,15 +20,17 @@ class LineBotService
 
     protected $type;
 
+    protected $userId;
+
     protected $say;
 
     protected $multiMessageBuilder;
 
-    public function __construct(MultiMessageBuilder $multiMessageBuilder)
+    public function __construct()
     {
         $httpClient = new CurlHTTPClient(env('LINE_BOT_CHANNEL_ACCESS_TOKEN'));
         $this->bot = new LINEBot($httpClient, ['channelSecret' => env('LINE_BOT_CHANNEL_SECRET')]);
-        $this->multiMessageBuilder = $multiMessageBuilder;
+        $this->multiMessageBuilder = new MultiMessageBuilder();
     }
 
     public function setBot(array $data)
@@ -34,6 +39,7 @@ class LineBotService
 
         $this->replyToken = $p['replyToken'];
         $this->type = $p['message']['type'];
+        $this->userId = $p['source']['userId'];
         $this->say = $p['message']['text'];
     }
 
@@ -71,6 +77,11 @@ class LineBotService
     public function checkPrefix()
     {
 
+    }
+
+    public function reqNickname()
+    {
+        return LineUserMap::NICKNAME[$this->userId] ?? '';
     }
 
     public function reply()

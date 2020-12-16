@@ -30,8 +30,7 @@ class LobbyController extends Controller
     {
         try {
             $event = request()->all();
-            Log::info(json_encode($event));
-            logger(json_encode($event, JSON_UNESCAPED_UNICODE));
+            Log::info(json_encode($event, JSON_UNESCAPED_UNICODE));
             return response('test');
         } catch (\Exception $e) {
             report($e);
@@ -42,11 +41,12 @@ class LobbyController extends Controller
     {
         try {
             $event = $request->all();
-            Log::info(json_encode($event));
-            logger(json_encode($event, JSON_UNESCAPED_UNICODE));
+            Log::info(json_encode($event, JSON_UNESCAPED_UNICODE));
 
             $this->lineBotService->setBot($event);
             $say = $this->lineBotService->getSay();
+
+//            dd($this->lineBotService->reqNickname());
 
             if (Str::contains($say, '幫我丟')) {
                 $prefix = mb_substr($say, 0, 2);
@@ -55,7 +55,9 @@ class LobbyController extends Controller
                 }
 
                 $message = $prefix . '(1~100)隨機骰出來的數字為: ' . $this->lineBotService->randomChange();
-                $this->bot->replyText($this->lineBotService->getReplyToken(), $message);
+                $this->lineBotService->setText($message);
+                $this->lineBotService->reply();
+//                $this->bot->replyText($this->lineBotService->getReplyToken(), $message);
             }
 
             if ('text' == $this->lineBotService->getReqType() && $this->lineBotService->randomChange() <= 34) {
