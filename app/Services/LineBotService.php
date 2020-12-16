@@ -26,11 +26,11 @@ class LineBotService
 
     protected $multiMessageBuilder;
 
-    public function __construct()
+    public function __construct(MultiMessageBuilder $multiMessageBuilder)
     {
         $httpClient = new CurlHTTPClient(env('LINE_BOT_CHANNEL_ACCESS_TOKEN'));
         $this->bot = new LINEBot($httpClient, ['channelSecret' => env('LINE_BOT_CHANNEL_SECRET')]);
-        $this->multiMessageBuilder = new MultiMessageBuilder();
+        $this->multiMessageBuilder = $multiMessageBuilder;
     }
 
     public function setBot(array $data)
@@ -86,7 +86,7 @@ class LineBotService
 
     public function reply()
     {
-        $response = $this->bot->replyMessage($this->multiMessageBuilder);
+        $response = $this->bot->replyMessage($this->replyToken, $this->multiMessageBuilder);
         if (!$response->isSucceeded()) {
             Log::error(json_encode([
                 'status' => $response->getHTTPStatus(),
