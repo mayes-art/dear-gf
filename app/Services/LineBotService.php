@@ -17,6 +17,8 @@ class LineBotService
 
     protected $type;
 
+    protected $say;
+
     protected $multiMessageBuilder;
 
     public function __construct(MultiMessageBuilder $multiMessageBuilder)
@@ -32,6 +34,7 @@ class LineBotService
 
         $this->replyToken = $p['replyToken'];
         $this->type = $p['message']['type'];
+        $this->say = $p['message']['text'];
     }
 
     public function randomChange() : int
@@ -43,6 +46,11 @@ class LineBotService
     public function getReqType() : string
     {
         return $this->type;
+    }
+
+    public function getSay() : string
+    {
+        return $this->say;
     }
 
     public function setText(String $data)

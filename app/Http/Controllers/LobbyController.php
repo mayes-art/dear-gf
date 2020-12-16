@@ -46,12 +46,14 @@ class LobbyController extends Controller
 
             $this->lineBotService->setBot($event);
 
-            $message = '嘔咾上帝, 阿們';
+            if ('text' == $this->lineBotService->getReqType() && '阿公幫我丟' === $this->lineBotService->getSay()) {
+                $this->lineBotService->setText('阿公(1~100)隨機骰出來的數字為: ' . $this->lineBotService->randomChange());
+                $this->lineBotService->reply();
+            }
 
             if ('text' == $this->lineBotService->getReqType() && $this->lineBotService->randomChange() <= 34) {
-                $this->bot->replyText($event['events'][0]['replyToken'], $message);
+                $this->bot->replyText($event['events'][0]['replyToken'], '嘔咾上帝, 阿們');
             }
-//            return response('test');
         } catch (\Exception $e) {
             report($e);
         }
