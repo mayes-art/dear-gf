@@ -68,6 +68,11 @@ class LineBotService
 
     }
 
+    public function checkPrefix()
+    {
+
+    }
+
     public function reply()
     {
         $response = $this->bot->replyMessage($this->multiMessageBuilder);

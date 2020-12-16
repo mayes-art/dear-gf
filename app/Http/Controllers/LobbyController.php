@@ -50,7 +50,7 @@ class LobbyController extends Controller
 
             if (Str::contains($say, '幫我丟')) {
                 $prefix = mb_substr($say, 0, 2);
-                if (!in_array($prefix, ['阿公', '爸爸', 'ㄚ公'])) {
+                if (!in_array($prefix, ['阿公', '爸爸', 'ㄚ公', '老爸'])) {
                     return;
                 }
 
