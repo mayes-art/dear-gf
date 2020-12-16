@@ -28,7 +28,7 @@ class LineBotService
         $this->multiMessageBuilder = $multiMessageBuilder;
     }
 
-    public function setBot(Array $data)
+    public function setBot(array $data)
     {
         $p = $data['events'][0];
 
@@ -37,23 +37,28 @@ class LineBotService
         $this->say = $p['message']['text'];
     }
 
-    public function randomChange() : int
+    public function randomChange(): int
     {
         $r = rand(1, 100);
         return $r;
     }
 
-    public function getReqType() : string
+    public function getReqType(): string
     {
         return $this->type;
     }
 
-    public function getSay() : string
+    public function getSay(): string
     {
         return $this->say;
     }
 
-    public function setText(String $data)
+    public function getReplyToken(): string
+    {
+        return $this->replyToken;
+    }
+
+    public function setText(string $data)
     {
         $this->multiMessageBuilder->add(new LINEBot\MessageBuilder\TextMessageBuilder($data));
     }
