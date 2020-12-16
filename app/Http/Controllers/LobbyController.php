@@ -59,8 +59,6 @@ class LobbyController extends Controller
 
                 $response = Http::get('http://bible.fhl.net/json/listall.html');
                 $blist = explode(',', $response->body());
-//                dd(in_array($stringFormat[1], $blist));
-
                 $blistC = collect($blist);
                 $index = $blistC->search($stringFormat[1]);
 
@@ -77,23 +75,14 @@ class LobbyController extends Controller
                     'version'  => 'unv',
                 ];
 
-//                dd($postParam);
-
                 $response = Http::asForm()->post('http://bible.fhl.net/json/qb.php', $postParam);
-//                dd($response);
                 if ($response->successful()) {
                     $bible = $response->json();
-//                    dd($bible);
-                    $message = "";
                     foreach($bible['record'] as $k => $v) {
-                        $message .= $v['sec'] . "  " . $v['bible_text'] . " %0D%0A ";
+                        $this->lineBotService->setText($v['sec'] . "  " . $v['bible_text']);
                     }
 
-//                    dd($message);
-
-                    $message .= $postParam['chineses'] . " " . $postParam['chap'] . " " . $postParam['sec'];
-
-                    $this->lineBotService->setText($message);
+                    $this->lineBotService->setText($postParam['chineses'] . " " . $postParam['chap'] . " " . $postParam['sec']);
                 }
             }
 
@@ -152,15 +141,11 @@ class LobbyController extends Controller
 //                    dd($bible);
                     $message = "";
                     foreach($bible['record'] as $k => $v) {
-                        $message .= $v['sec'] . "  " . $v['bible_text'] . " %0D%0A ";
+                        $this->lineBotService->setText($v['sec'] . "  " . $v['bible_text']);
                     }
-
 //                    dd($message);
 
-                    $message .= $postParam['chineses'] . " " . $postParam['chap'] . " " . $postParam['sec'];
-
-                    $this->lineBotService->setText($message);
-
+                    $this->lineBotService->setText($postParam['chineses'] . " " . $postParam['chap'] . " " . $postParam['sec']);
                 }
             }
         } catch (\Exception $e) {
