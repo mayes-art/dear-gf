@@ -57,7 +57,7 @@ class LobbyController extends Controller
             if (Str::contains($say, '讀經')) {
                 $stringFormat = explode(' ', $say);
 
-                $response = Http::get('https://bible.fhl.net/json/listall.html');
+                $response = Http::get('http://bible.fhl.net/json/listall.html');
                 $blist = explode(',', $response->body());
 //                dd(in_array($stringFormat[1], $blist));
 
@@ -79,7 +79,7 @@ class LobbyController extends Controller
 
 //                dd($postParam);
 
-                $response = Http::asForm()->post('https://bible.fhl.net/json/qb.php', $postParam);
+                $response = Http::asForm()->post('http://bible.fhl.net/json/qb.php', $postParam);
 //                dd($response);
                 if ($response->successful()) {
                     $bible = $response->json();
