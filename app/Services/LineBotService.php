@@ -8,6 +8,7 @@ namespace App\Services;
 
 use App\Contants\LineUserMap;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 use LINE\LINEBot;
 use LINE\LINEBot\HTTPClient\CurlHTTPClient;
 use LINE\LINEBot\MessageBuilder\MultiMessageBuilder;
@@ -76,12 +77,22 @@ class LineBotService
 
     public function checkPrefix()
     {
-
+            $prefix = mb_substr($this->say, 0, 2);
+            return in_array($prefix, ['阿公', '爸爸', 'ㄚ公', '老爸', '爺爺']);
     }
 
     public function reqNickname()
     {
         return LineUserMap::NICKNAME[$this->userId] ?? '';
+    }
+
+    public function bootHandler()
+    {
+        if (Str::contains($this->say, '幫我丟')) {
+            $prefix = $this->checkPrefix();
+            $message = $prefix . '(1~100)隨機骰出來的數字為: ' . $this->randomChange();
+            $this->setText($message);
+        }
     }
 
     public function reply()

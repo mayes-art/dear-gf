@@ -25,3 +25,5 @@ Route::get('info', function () {
 Route::get('/', [LobbyController::class, 'lineGet']);
 Route::post('/', [LobbyController::class, 'linePost']);
 
+Route::post('test', [LobbyController::class, 'test']);
+

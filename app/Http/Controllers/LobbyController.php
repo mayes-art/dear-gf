@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Services\LineBotService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use LINE\LINEBot;
@@ -48,20 +49,119 @@ class LobbyController extends Controller
 
 //            dd($this->lineBotService->reqNickname());
 
-            if (Str::contains($say, '幫我丟')) {
-                $prefix = mb_substr($say, 0, 2);
-                if (!in_array($prefix, ['阿公', '爸爸', 'ㄚ公', '老爸'])) {
-                    return;
+            $prefix = $this->lineBotService->checkPrefix();
+            if (!$prefix) {
+                return;
+            }
+
+            if (Str::contains($say, '讀經')) {
+                $stringFormat = explode(' ', $say);
+
+                $response = Http::get('https://bible.fhl.net/json/listall.html');
+                $blist = explode(',', $response->body());
+//                dd(in_array($stringFormat[1], $blist));
+
+                $blistC = collect($blist);
+                $index = $blistC->search($stringFormat[1]);
+
+                if ($index % 5 === 4) {
+                    $index--;
                 }
 
+                $postParam = [
+                    'chineses' => $blist[$index],
+                    'chap'     => $stringFormat[2],
+                    'sec'      => $stringFormat[3],
+                    'strong'   => 0,
+                    'gb'       => 0,
+                    'version'  => 'unv',
+                ];
+
+//                dd($postParam);
+
+                $response = Http::asForm()->post('https://bible.fhl.net/json/qb.php', $postParam);
+//                dd($response);
+                if ($response->successful()) {
+                    $bible = $response->json();
+//                    dd($bible);
+                    $message = "";
+                    foreach($bible['record'] as $k => $v) {
+                        $message .= $v['sec'] . "  " . $v['bible_text'] . " %0D%0A ";
+                    }
+
+//                    dd($message);
+
+                    $message .= $postParam['chineses'] . " " . $postParam['chap'] . " " . $postParam['sec'];
+
+                    $this->lineBotService->setText($message);
+                }
+            }
+
+            if (Str::contains($say, '幫我丟')) {
                 $message = $prefix . '(1~100)隨機骰出來的數字為: ' . $this->lineBotService->randomChange();
                 $this->lineBotService->setText($message);
-                $this->lineBotService->reply();
-//                $this->bot->replyText($this->lineBotService->getReplyToken(), $message);
             }
 
             if ('text' == $this->lineBotService->getReqType() && $this->lineBotService->randomChange() <= 34) {
-                $this->bot->replyText($event['events'][0]['replyToken'], '嘔咾上帝, 阿們');
+                $this->lineBotService->setText('嘔咾上帝, 阿們');
+            }
+
+            $this->lineBotService->reply();
+        } catch (\Exception $e) {
+            report($e);
+        }
+    }
+
+    public function test(Request $request)
+    {
+        try {
+            $event = $request->all();
+
+            $this->lineBotService->setBot($event);
+            $say = $this->lineBotService->getSay();
+
+            if (Str::contains($say, '讀經')) {
+                $stringFormat = explode(' ', $say);
+
+                $response = Http::get('https://bible.fhl.net/json/listall.html');
+                $blist = explode(',', $response->body());
+//                dd(in_array($stringFormat[1], $blist));
+
+                $blistC = collect($blist);
+                $index = $blistC->search($stringFormat[1]);
+
+                if ($index % 5 === 4) {
+                    $index--;
+                }
+
+                $postParam = [
+                    'chineses' => $blist[$index],
+                    'chap'     => $stringFormat[2],
+                    'sec'      => $stringFormat[3],
+                    'strong'   => 0,
+                    'gb'       => 0,
+                    'version'  => 'unv',
+                ];
+
+//                dd($postParam);
+
+                $response = Http::asForm()->post('https://bible.fhl.net/json/qb.php', $postParam);
+//                dd($response);
+                if ($response->successful()) {
+                    $bible = $response->json();
+//                    dd($bible);
+                    $message = "";
+                    foreach($bible['record'] as $k => $v) {
+                        $message .= $v['sec'] . "  " . $v['bible_text'] . " %0D%0A ";
+                    }
+
+//                    dd($message);
+
+                    $message .= $postParam['chineses'] . " " . $postParam['chap'] . " " . $postParam['sec'];
+
+                    $this->lineBotService->setText($message);
+
+                }
             }
         } catch (\Exception $e) {
             report($e);
