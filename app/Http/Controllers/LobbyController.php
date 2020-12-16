@@ -48,7 +48,7 @@ class LobbyController extends Controller
 
             $message = '嘔咾上帝, 阿們';
 
-            if ('text' == $this->lineBotService->getReqType()) {
+            if ('text' == $this->lineBotService->getReqType() && $this->lineBotService->randomChange() <= 34) {
                 $this->bot->replyText($event['events'][0]['replyToken'], $message);
             }
 //            return response('test');
