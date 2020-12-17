@@ -78,7 +78,11 @@ class LineBotService
     public function checkPrefix()
     {
             $prefix = mb_substr($this->say, 0, 2);
-            return in_array($prefix, ['阿公', '爸爸', 'ㄚ公', '老爸', '爺爺']);
+            if (in_array($prefix, ['阿公', '爸爸', 'ㄚ公', '老爸', '爺爺'])) {
+                return $prefix;
+            }
+
+            return false;
     }
 
     public function reqNickname()
