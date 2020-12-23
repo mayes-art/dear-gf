@@ -49,10 +49,28 @@ class LobbyController extends Controller
 
 //            dd($this->lineBotService->reqNickname());
 
-            if (Str::contains($say, '看劇')) {
+            if (Str::contains($say, '看韓劇')) {
+                $geCode = 20;
                 $stringFormat = explode(' ', $say);
                 $wd = urlencode($stringFormat[1]);
-                $tvUrl = "https://gimy.tv/s/-------------.html?wd={$wd}&submit=";
+//                $tvUrl = "https://gimy.tv/s/-------------.html?wd={$wd}&submit=";
+                $tvUrl = "https://gimy.tv/genre/{$geCode}-----------.html?wd={$wd}&submit=";
+                $this->lineBotService->setText($tvUrl);
+            }
+
+            if (Str::contains($say, '看美劇')) {
+                $geCode = 16;
+                $stringFormat = explode(' ', $say);
+                $wd = urlencode($stringFormat[1]);
+                $tvUrl = "https://gimy.tv/genre/{$geCode}-----------.html?wd={$wd}&submit=";
+                $this->lineBotService->setText($tvUrl);
+            }
+
+            if (Str::contains($say, '看日劇')) {
+                $geCode = 15;
+                $stringFormat = explode(' ', $say);
+                $wd = urlencode($stringFormat[1]);
+                $tvUrl = "https://gimy.tv/genre/{$geCode}-----------.html?wd={$wd}&submit=";
                 $this->lineBotService->setText($tvUrl);
             }
 
