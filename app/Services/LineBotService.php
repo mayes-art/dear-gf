@@ -77,7 +77,7 @@ class LineBotService
 
     public function setImage($image)
     {
-        $this->multiMessageBuilder->add(new LINEBot\MessageBuilder\ImageMessageBuilder($image, "{$image}t"));
+        $this->multiMessageBuilder->add(new LINEBot\MessageBuilder\ImageMessageBuilder($image, $image));
     }
 
     public function checkPrefix()
