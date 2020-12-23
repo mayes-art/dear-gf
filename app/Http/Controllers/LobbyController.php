@@ -54,6 +54,14 @@ class LobbyController extends Controller
                 return;
             }
 
+            if (Str::contains($say, '抽美女')) {
+                $imgurImages = 'https://api.imgur.com/3/album/bGVWzR2/images';
+                $accessToken = '23a3fc911a3e85e0111de632b42d39e0e6bc1551';
+                $response = Http::withToken($accessToken)->get($imgurImages);
+                $image = collect($response->json('data'))->random();
+                $this->lineBotService->setImage($image['link']);
+            }
+
             if (Str::contains($say, '讀經')) {
                 $stringFormat = explode(' ', $say);
 
@@ -109,44 +117,13 @@ class LobbyController extends Controller
             $this->lineBotService->setBot($event);
             $say = $this->lineBotService->getSay();
 
-            if (Str::contains($say, '讀經')) {
-                $stringFormat = explode(' ', $say);
+            if (Str::contains($say, '抽美女')) {
+                $imgurImages = 'https://api.imgur.com/3/album/bGVWzR2/images';
+                $accessToken = '23a3fc911a3e85e0111de632b42d39e0e6bc1551';
+                $response = Http::withToken($accessToken)->get($imgurImages);
+                $image = collect($response->json('data'))->random();
 
-                $response = Http::get('https://bible.fhl.net/json/listall.html');
-                $blist = explode(',', $response->body());
-//                dd(in_array($stringFormat[1], $blist));
-
-                $blistC = collect($blist);
-                $index = $blistC->search($stringFormat[1]);
-
-                if ($index % 5 === 4) {
-                    $index--;
-                }
-
-                $postParam = [
-                    'chineses' => $blist[$index],
-                    'chap'     => $stringFormat[2],
-                    'sec'      => $stringFormat[3],
-                    'strong'   => 0,
-                    'gb'       => 0,
-                    'version'  => 'unv',
-                ];
-
-//                dd($postParam);
-
-                $response = Http::asForm()->post('https://bible.fhl.net/json/qb.php', $postParam);
-//                dd($response);
-                if ($response->successful()) {
-                    $bible = $response->json();
-//                    dd($bible);
-                    $message = "";
-                    foreach($bible['record'] as $k => $v) {
-                        $this->lineBotService->setText($v['sec'] . "  " . $v['bible_text']);
-                    }
-//                    dd($message);
-
-                    $this->lineBotService->setText($postParam['chineses'] . " " . $postParam['chap'] . " " . $postParam['sec']);
-                }
+                dd($image['link']);
             }
         } catch (\Exception $e) {
             report($e);

@@ -72,7 +72,12 @@ class LineBotService
 
     public function setSticker()
     {
+        $this->multiMessageBuilder->add(new LINEBot\MessageBuilder\StickerMessageBuilder(''));
+    }
 
+    public function setImage($image)
+    {
+        $this->multiMessageBuilder->add(new LINEBot\MessageBuilder\ImageMessageBuilder($image));
     }
 
     public function checkPrefix()
