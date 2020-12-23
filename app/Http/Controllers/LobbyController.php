@@ -49,9 +49,11 @@ class LobbyController extends Controller
 
 //            dd($this->lineBotService->reqNickname());
 
-            $prefix = $this->lineBotService->checkPrefix();
-            if (!$prefix) {
-                return;
+            if (Str::contains($say, '看劇')) {
+                $stringFormat = explode(' ', $say);
+                $wd = urlencode($stringFormat[1]);
+                $tvUrl = "https://gimy.tv/s/-------------.html?wd={$wd}&submit=";
+                $this->lineBotService->setText($tvUrl);
             }
 
             if (Str::contains($say, '抽美女')) {
@@ -60,6 +62,11 @@ class LobbyController extends Controller
                 $response = Http::withToken($accessToken)->get($imgurImages);
                 $image = collect($response->json('data'))->random();
                 $this->lineBotService->setImage($image['link']);
+            }
+
+            $prefix = $this->lineBotService->checkPrefix();
+            if (!$prefix) {
+                return;
             }
 
             if (Str::contains($say, '讀經')) {
@@ -117,13 +124,13 @@ class LobbyController extends Controller
             $this->lineBotService->setBot($event);
             $say = $this->lineBotService->getSay();
 
-            if (Str::contains($say, '抽美女')) {
-                $imgurImages = 'https://api.imgur.com/3/album/bGVWzR2/images';
-                $accessToken = '23a3fc911a3e85e0111de632b42d39e0e6bc1551';
-                $response = Http::withToken($accessToken)->get($imgurImages);
-                $image = collect($response->json('data'))->random();
+            if (Str::contains($say, '看劇')) {
+                $stringFormat = explode(' ', $say);
 
-                dd($image['link']);
+                $wd = urlencode($stringFormat[1]);
+                $tvUrl = "https://gimy.tv/s/-------------.html?wd={$wd}&submit=";
+
+                dd($tvUrl);
             }
         } catch (\Exception $e) {
             report($e);
