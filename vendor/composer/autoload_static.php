@@ -134,6 +134,10 @@ class ComposerStaticInit3ea973c18e6a361671713a02e51fd25a
             'Illuminate\\Support\\' => 19,
             'Illuminate\\' => 11,
         ),
+        'H' => 
+        array (
+            'Hanson\\Chinese\\' => 15,
+        ),
         'G' => 
         array (
             'GuzzleHttp\\Psr7\\' => 16,
@@ -407,6 +411,10 @@ class ComposerStaticInit3ea973c18e6a361671713a02e51fd25a
         'Illuminate\\' => 
         array (
             0 => __DIR__ . '/..' . '/laravel/framework/src/Illuminate',
+        ),
+        'Hanson\\Chinese\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/hanson/chinese/src',
         ),
         'GuzzleHttp\\Psr7\\' => 
         array (
@@ -1556,6 +1564,7 @@ class ComposerStaticInit3ea973c18e6a361671713a02e51fd25a
         'Hamcrest\\Type\\IsString' => __DIR__ . '/..' . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Type/IsString.php',
         'Hamcrest\\Util' => __DIR__ . '/..' . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Util.php',
         'Hamcrest\\Xml\\HasXPath' => __DIR__ . '/..' . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Xml/HasXPath.php',
+        'Hanson\\Chinese\\Chinese' => __DIR__ . '/..' . '/hanson/chinese/src/Chinese.php',
         'Illuminate\\Auth\\Access\\AuthorizationException' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Auth/Access/AuthorizationException.php',
         'Illuminate\\Auth\\Access\\Gate' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Auth/Access/Gate.php',
         'Illuminate\\Auth\\Access\\HandlesAuthorization' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Auth/Access/HandlesAuthorization.php',
