@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Constants\Constellation;
 use App\Services\LineBotService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -48,6 +49,10 @@ class LobbyController extends Controller
             $say = $this->lineBotService->getSay();
 
 //            dd($this->lineBotService->reqNickname());
+            $prefix = $this->lineBotService->checkPrefix();
+//            if (!$prefix) {
+//                return;
+//            }
 
             if (Str::contains($say, '看韓劇')) {
                 $geCode = 20;
@@ -78,13 +83,18 @@ class LobbyController extends Controller
                 $imgurImages = 'https://api.imgur.com/3/album/bGVWzR2/images';
                 $accessToken = '23a3fc911a3e85e0111de632b42d39e0e6bc1551';
                 $response = Http::withToken($accessToken)->get($imgurImages);
-                $image = collect($response->json('data'))->random();
-                $this->lineBotService->setImage($image['link']);
+                if ($response->successful()) {
+                    $image = collect($response->json('data'))->random();
+                    $this->lineBotService->setImage($image['link']);
+                }
             }
 
-            $prefix = $this->lineBotService->checkPrefix();
-            if (!$prefix) {
-                return;
+            if (Str::contains("{$say}座", Constellation::ALL_TW)) {
+                $apiUri = "https://api.5tk.xyz/api/conste.php?msg={$say}座";
+                $response = Http::get($apiUri);
+                if ($response->successful()) {
+                    $this->lineBotService->setText($response->body());
+                }
             }
 
             if (Str::contains($say, '讀經')) {
@@ -142,13 +152,10 @@ class LobbyController extends Controller
             $this->lineBotService->setBot($event);
             $say = $this->lineBotService->getSay();
 
-            if (Str::contains($say, '看劇')) {
-                $stringFormat = explode(' ', $say);
-
-                $wd = urlencode($stringFormat[1]);
-                $tvUrl = "https://gimy.tv/s/-------------.html?wd={$wd}&submit=";
-
-                dd($tvUrl);
+            if (Str::contains("{$say}座", Constellation::ALL_TW)) {
+                $apiUri = "https://api.5tk.xyz/api/conste.php?msg={$say}座";
+                $response = Http::get($apiUri);
+                echo $response->body();
             }
         } catch (\Exception $e) {
             report($e);
