@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Constants\Constellation;
 use App\Services\LineBotService;
+use Hanson\Chinese\Chinese;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -90,10 +91,11 @@ class LobbyController extends Controller
             }
 
             if (Str::contains("{$say}座", Constellation::ALL_TW)) {
+                $say2s = Chinese::simplified($say . "座");
                 $apiUri = "https://api.5tk.xyz/api/conste.php?msg={$say}座";
                 $response = Http::get($apiUri);
                 if ($response->successful()) {
-                    $this->lineBotService->setText($response->body());
+                    $this->lineBotService->setText(Chinese::traditional($response->body()));
                 }
             }
 
@@ -153,9 +155,10 @@ class LobbyController extends Controller
             $say = $this->lineBotService->getSay();
 
             if (Str::contains("{$say}座", Constellation::ALL_TW)) {
-                $apiUri = "https://api.5tk.xyz/api/conste.php?msg={$say}座";
+                $say2s = Chinese::simplified($say . "座");
+                $apiUri = "https://api.5tk.xyz/api/conste.php?msg={$say2s}";
                 $response = Http::get($apiUri);
-                echo $response->body();
+                echo Chinese::traditional($response->body());
             }
         } catch (\Exception $e) {
             report($e);

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3fd3daf36851510dcb6a0ae8ebabf009",
+    "content-hash": "967f9051867fdfbb7210aace261ac3b7",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -891,6 +891,54 @@
                 "source": "https://github.com/guzzle/psr7/tree/1.7.0"
             },
             "time": "2020-09-30T07:37:11+00:00"
+        },
+        {
+            "name": "hanson/chinese",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Hanson/chinese.git",
+                "reference": "3df22c9d9942b672fd7fcf97e387e7af13f5fe32"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Hanson/chinese/zipball/3df22c9d9942b672fd7fcf97e387e7af13f5fe32",
+                "reference": "3df22c9d9942b672fd7fcf97e387e7af13f5fe32",
+                "shasum": ""
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Hanson\\Chinese\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Hanson",
+                    "email": "h@hanc.cc"
+                },
+                {
+                    "name": "fengqi",
+                    "email": "lyf362345@gmail.com",
+                    "homepage": "http://fengqi.me"
+                }
+            ],
+            "description": "简繁体转换.",
+            "keywords": [
+                "Pinyin",
+                "fanti",
+                "hanzi",
+                "jianti"
+            ],
+            "support": {
+                "source": "https://github.com/Hanson/chinese/tree/master"
+            },
+            "time": "2018-09-06T18:23:43+00:00"
         },
         {
             "name": "laravel/framework",
@@ -7425,7 +7473,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "hanson/chinese": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

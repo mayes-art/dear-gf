@@ -1379,6 +1379,57 @@
             "install-path": "../hamcrest/hamcrest-php"
         },
         {
+            "name": "hanson/chinese",
+            "version": "dev-master",
+            "version_normalized": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Hanson/chinese.git",
+                "reference": "3df22c9d9942b672fd7fcf97e387e7af13f5fe32"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Hanson/chinese/zipball/3df22c9d9942b672fd7fcf97e387e7af13f5fe32",
+                "reference": "3df22c9d9942b672fd7fcf97e387e7af13f5fe32",
+                "shasum": ""
+            },
+            "time": "2018-09-06T18:23:43+00:00",
+            "default-branch": true,
+            "type": "library",
+            "installation-source": "source",
+            "autoload": {
+                "psr-4": {
+                    "Hanson\\Chinese\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Hanson",
+                    "email": "h@hanc.cc"
+                },
+                {
+                    "name": "fengqi",
+                    "email": "lyf362345@gmail.com",
+                    "homepage": "http://fengqi.me"
+                }
+            ],
+            "description": "简繁体转换.",
+            "keywords": [
+                "Pinyin",
+                "fanti",
+                "hanzi",
+                "jianti"
+            ],
+            "support": {
+                "source": "https://github.com/Hanson/chinese/tree/master"
+            },
+            "install-path": "../hanson/chinese"
+        },
+        {
             "name": "laravel/framework",
             "version": "v8.18.1",
             "version_normalized": "8.18.1.0",
