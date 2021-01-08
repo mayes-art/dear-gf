@@ -49,54 +49,10 @@ class LobbyController extends Controller
             $this->lineBotService->setBot($event);
             $say = $this->lineBotService->getSay();
 
-//            dd($this->lineBotService->reqNickname());
+            $nickName = $this->lineBotService->reqNickname();
             $prefix = $this->lineBotService->checkPrefix();
 //            if (!$prefix) {
 //                return;
-//            }
-
-//            if (Str::contains($say, '看韓劇')) {
-//                $geCode = 20;
-//                $stringFormat = explode(' ', $say);
-//                $wd = urlencode($stringFormat[1]);
-////                $tvUrl = "https://gimy.tv/s/-------------.html?wd={$wd}&submit=";
-//                $tvUrl = "https://gimy.tv/genre/{$geCode}-----------.html?wd={$wd}&submit=";
-//                $this->lineBotService->setText($tvUrl);
-//            }
-//
-//            if (Str::contains($say, '看美劇')) {
-//                $geCode = 16;
-//                $stringFormat = explode(' ', $say);
-//                $wd = urlencode($stringFormat[1]);
-//                $tvUrl = "https://gimy.tv/genre/{$geCode}-----------.html?wd={$wd}&submit=";
-//                $this->lineBotService->setText($tvUrl);
-//            }
-//
-//            if (Str::contains($say, '看日劇')) {
-//                $geCode = 15;
-//                $stringFormat = explode(' ', $say);
-//                $wd = urlencode($stringFormat[1]);
-//                $tvUrl = "https://gimy.tv/genre/{$geCode}-----------.html?wd={$wd}&submit=";
-//                $this->lineBotService->setText($tvUrl);
-//            }
-//
-//            if (Str::contains($say, '抽美女')) {
-//                $imgurImages = 'https://api.imgur.com/3/album/bGVWzR2/images';
-//                $accessToken = '23a3fc911a3e85e0111de632b42d39e0e6bc1551';
-//                $response = Http::withToken($accessToken)->get($imgurImages);
-//                if ($response->successful()) {
-//                    $image = collect($response->json('data'))->random();
-//                    $this->lineBotService->setImage($image['link']);
-//                }
-//            }
-//
-//            if (Str::contains("{$say}座", Constellation::ALL_TW)) {
-//                $say2s = Chinese::simplified($say . "座");
-//                $apiUri = "https://api.5tk.xyz/api/conste.php?msg={$say2s}";
-//                $response = Http::get($apiUri);
-//                if ($response->successful()) {
-//                    $this->lineBotService->setText(Chinese::traditional($response->body()));
-//                }
 //            }
 
             if (Str::contains($say, '讀經')) {
@@ -138,6 +94,9 @@ class LobbyController extends Controller
 
             if ('text' == $this->lineBotService->getReqType() && $this->lineBotService->randomChange() <= 34) {
                 $this->lineBotService->setText('嘔咾上帝, 阿們');
+                if (!empty($nickName)) {
+                    $this->lineBotService->setText($nickName);
+                }
             }
 
             $this->lineBotService->reply();
