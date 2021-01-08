@@ -6,7 +6,7 @@
 namespace App\Services;
 
 
-use App\Contants\LineUserMap;
+use App\Constants\LineUserMap;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use LINE\LINEBot;

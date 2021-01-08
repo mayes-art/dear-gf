@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Contants;
+namespace App\Constants;
 
 
 class LineUserMap
